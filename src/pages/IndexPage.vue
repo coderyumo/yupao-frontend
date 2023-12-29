@@ -9,7 +9,6 @@ import {useRoute, useRouter} from "vue-router";
 import myAxios from "../plugins/myAxios.ts";
 import {showFailToast, showSuccessToast, Toast} from "vant";
 import UserCardList from "../components/UserCardList.vue";
-import {getCurrentUser} from "../services/user.ts";
 
 const userList = ref([]);
 const route = useRoute();
@@ -22,6 +21,8 @@ onMounted(async () => {
   if (token == null) {
     await router.push('/user/login')
   }
+
+
   const userListData = await myAxios.get('/user/recommend', {
     params: {
       pageSize: 8,
