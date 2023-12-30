@@ -1,9 +1,9 @@
 <template>
   <van-search v-model="searchText" placeholder="搜索队伍" @search="onSearch"/>
+  <van-button type="primary" @click="doAddTeam">创建队伍</van-button>
   <TeamCardList :team-list="teamList"/>
   <van-empty description="数据为空" v-if="!teamList ||teamList.length < 1"/>
   <div id="teamPage">
-    <van-button type="primary" @click="doAddTeam">创建队伍</van-button>
   </div>
 </template>
 
@@ -21,10 +21,13 @@ const teamList = ref([]);
 const router = useRouter();
 const searchText = ref('');
 
-const listTeam = async (val = '') => {
+
+const listTeam = async (val: string,userId: number) => {
   const token = localStorage.getItem("token").split('-');
-  const resData = await myAxios.get('/team/list', {
+  const currentUser = await getCurrentUser();
+  const resData = await myAxios.get('/team/list/my/join', {
     params: {
+      userId:currentUser.data.id,
       searchText: val,
       userAccount: token[0],
       uuid: token[1]
@@ -40,17 +43,17 @@ const listTeam = async (val = '') => {
 onMounted(async () => {
       const res = await getCurrentUser();
       if (res.code === 0) {
-        await router.push('/team')
+        await router.push('/myteam')
       } else {
         await router.push('/user/login')
       }
-      await listTeam();
+      await listTeam('',0);
     }
 )
 
 //搜索队伍
 const onSearch = (val) => {
-  listTeam(val)
+  listTeam('',0)
 };
 
 
