@@ -1,10 +1,10 @@
 <template>
   <van-form @submit="onSubmit">
     <van-field
-        v-model="editUser.currentValue"
-        :name="editUser.editKey"
-        :label="editUser.editName"
-        :placeholder="`请输入${editUser.editName}`"
+        v-model="currentUser.tags"
+        name="tag"
+        label="标签"
+        placeholder="请选择标签"
     />
     <div style="margin: 16px;">
       <van-button round block type="primary" native-type="submit">
@@ -16,13 +16,14 @@
 
 <script setup>
 import {useRoute, useRouter} from "vue-router";
-import {onMounted, ref} from "vue";
+import {ref} from "vue";
 import {showFailToast, showSuccessToast} from "vant";
-import myAxios from "../plugins/myAxios.ts";
-import {getCurrentUser} from "../services/user.ts";
+import myAxios from "../../plugins/myAxios.ts";
+import {getCurrentUser} from "../../services/user.ts";
 
 const route = useRoute();
 const router = useRouter();
+const currentUser = getCurrentUser()
 
 const editUser = ref({
   id: route.query.editId,
@@ -31,8 +32,9 @@ const editUser = ref({
   currentValue: route.query.currentValue
 });
 
+
+
 const onSubmit = async () => {
-  const data = await getCurrentUser()
 
   const token = localStorage.getItem("token").split('-');
   const res = await myAxios.post('/user/update', {

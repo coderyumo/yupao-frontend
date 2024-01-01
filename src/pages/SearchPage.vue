@@ -18,7 +18,6 @@
     </van-col>
   </van-row>
 
-
   <van-divider content-position="left">选择标签</van-divider>
   <van-divider content-position="left"/>
   <van-tree-select
@@ -47,18 +46,69 @@ const originTagList = [
   {
     text: '年级',
     children: [
+      {text: '高一', id: '高一',},
+      {text: '高二', id: '高二',},
+      {text: '高三', id: '高三',},
       {text: '大一', id: '大一',},
       {text: '大二', id: '大二'},
-      {text: '大3', id: '大3'},
-      {text: '大4', id: '大4'},
-      {text: '大5', id: '大5'},
-      {text: '大6', id: '大6'},
-      {text: '大aaaaaaa', id: '大aaaaaaa'},
-      {text: '大ddddd', id: '大ddddd'},
-      {text: '大asdasdasd', id: '大asdasdasd'},
+      {text: '大三', id: '大三'},
+      {text: '大四', id: '大四'},
+      {text: '研一', id: '研一'},
+      {text: '研二', id: '研二'},
+      {text: '研三', id: '研三'},
     ],
-  }]
+  },
+  {
+    text: '编程语言',
+    children: [
+      {text: 'Java', id: 'Java',},
+      {text: 'Python', id: 'Python',},
+      {text: 'C', id: 'C',},
+      {text: 'Vue', id: 'Vue',},
+      {text: 'React', id: 'React',},
+      {text: 'Angular', id: 'Angular',},
+      {text: 'C++', id: 'C++',},
+      {text: 'Go', id: 'Go'},
+      {text: 'C#', id: 'C#'},
+    ],
+  },
+  {
+    text: '目标',
+    children: [
+      {text: '考研', id: '考研',},
+      {text: '春招', id: '春招',},
+      {text: '秋招', id: '秋招',},
+      {text: '考公', id: '考公',},
+      {text: '竞赛', id: '竞赛',},
+      {text: '转行', id: '转行',},
+      {text: '跳槽', id: '跳槽',},
+    ],
+  },
+  {
+    text: '段位',
+    children: [
+      {text: '初级', id: '初级',},
+      {text: '中级', id: '中级',},
+      {text: '高级', id: '高级',},
+      {text: '架构师', id: '架构师',},
+    ],
+  },
+  {
+    text: '状态',
+    children: [
+      {text: '乐观', id: '乐观',},
+      {text: 'emo', id: 'emo',},
+      {text: '一般', id: '一般',},
+      {text: '单身', id: '单身',},
+      {text: '已婚', id: '已婚',},
+      {text: '有对象', id: '有对象',},
+    ],
+  },
+]
+
 let tagList = ref(originTagList);
+console.log(tagList.value);
+
 const onSearch = (val) => {
   tagList.value = originTagList.map(parentTag => {
     const tempChildren = parentTag.children.filter(item => item.text.includes(searchText.value));
@@ -81,6 +131,13 @@ const doClose = (tag) => {
     return item !== tag;
   })
 }
+
+
+//获取所有标签
+const getAllTags = () =>{
+
+}
+
 
 /**
  * 执行搜索

@@ -16,7 +16,10 @@ myAxios.interceptors.request.use(function (config) {
 // Add a response interceptor
 myAxios.interceptors.response.use(function (response) {
     console.log("我收到请求了",response)
-    // Do something with response data
+    // 未登录跳转到登录页面
+    if (response?.data?.code===40100){
+        window.location.href="/user/login"
+    }
     return response.data;
 }, function (error) {
     // Do something with response error

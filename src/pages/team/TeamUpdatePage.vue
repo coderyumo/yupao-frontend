@@ -53,6 +53,8 @@
             />
           </van-picker-group>
         </van-popup>
+-->
+
 
         <van-field name="radio" label="房间类型">
           <template #input>
@@ -63,8 +65,9 @@
             </van-radio-group>
           </template>
         </van-field>
+
         <van-field
-            v-if="Number(addTeamData.status) === 2"
+            v-if="Number(addTeamData.password) === 2"
             v-model="addTeamData.password"
             type="password"
             name="password"
@@ -86,7 +89,7 @@
 <script setup>
 
 import {onMounted, ref} from "vue";
-import myAxios from "../plugins/myAxios.ts";
+import myAxios from "../../plugins/myAxios.ts";
 import {showFailToast, showSuccessToast} from "vant";
 import {useRoute, useRouter} from "vue-router";
 

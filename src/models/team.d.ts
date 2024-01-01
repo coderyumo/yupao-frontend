@@ -11,10 +11,12 @@ export type TeamType = {
     maxNum: number;
     expireTime?:Date;
     userId:number;
+    isJoin:boolean;
     createUsername: string;
     createAvatarUrl?: string;
     status: number;
     createTime: Date;
     updateTime: Date;
     userList: UserType[]
+    memberId: number[]
 };

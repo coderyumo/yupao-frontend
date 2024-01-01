@@ -86,7 +86,7 @@
 <script setup>
 
 import {ref} from "vue";
-import myAxios from "../plugins/myAxios.ts";
+import myAxios from "../../plugins/myAxios.ts";
 import {showFailToast, showSuccessToast} from "vant";
 import {useRouter} from "vue-router";
 
@@ -114,7 +114,7 @@ const columnsType = ['hour', 'minute', 'second'];
 const showPicker = ref(false);
 const onConfirm = ({ selectedValues }) => {
   //组合过期时间，'T'是满足后端序列化配的
-  addTeamData.value.expireTime = currentDate.value.join('-') + 'T' + currentTime.value.join(':');
+  addTeamData.value.expireTime = currentDate.value.join('-') + ' ' + currentTime.value.join(':');
   showPicker.value = false;		//有了这行才会使picker点击“确认”后自动关闭
 }
 

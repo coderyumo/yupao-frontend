@@ -3,16 +3,15 @@
   <TeamCardList :team-list="teamList"/>
   <van-empty description="数据为空" v-if="!teamList ||teamList.length < 1"/>
   <div id="teamPage">
-    <van-button type="primary" @click="doAddTeam">创建队伍</van-button>
   </div>
 </template>
 
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
-import {getCurrentUser} from "../services/user.ts";
-import TeamCardList from "../components/TeamCardList.vue";
-import myAxios from "../plugins/myAxios.ts";
+import {getCurrentUser} from "../../services/user.ts";
+import TeamCardList from "../../components/TeamCardList.vue";
+import myAxios from "../../plugins/myAxios.ts";
 import {showFailToast} from "vant";
 
 
@@ -21,9 +20,10 @@ const teamList = ref([]);
 const router = useRouter();
 const searchText = ref('');
 
-const listTeam = async (val = '') => {
+
+const listTeam = async (val: string,userId: number) => {
   const token = localStorage.getItem("token").split('-');
-  const resData = await myAxios.get('/team/list', {
+  const resData = await myAxios.get('/team/list/my/join', {
     params: {
       searchText: val,
       userAccount: token[0],
@@ -37,20 +37,9 @@ const listTeam = async (val = '') => {
   }
 }
 
-onMounted(async () => {
-      const res = await getCurrentUser();
-      if (res.code === 0) {
-        await router.push('/team')
-      } else {
-        await router.push('/user/login')
-      }
-      await listTeam();
-    }
-)
-
 //搜索队伍
 const onSearch = (val) => {
-  listTeam(val)
+  listTeam('',0)
 };
 
 

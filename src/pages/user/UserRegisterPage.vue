@@ -9,6 +9,23 @@
           :rules="[{ required: true, message: '请输入账号' }]"
       />
       <van-field
+          v-model="planetCode"
+          name="planetCode"
+          type="number"
+          label="星球编号"
+          placeholder="请输入星球编号"
+          @click="show=true"
+          readonly
+          :rules="[{ required: true, message: '请输入星球编号' }]"
+      />
+<!--      <van-field v-model="planetCode" readonly clickable @touchstart.stop="show = true" />-->
+      <van-number-keyboard
+          v-model="planetCode"
+          :show="show"
+          :maxlength="6"
+          @blur="show = false"
+      />
+      <van-field
           v-model="userPassword"
           type="password"
           name="userPassword"
@@ -16,10 +33,18 @@
           placeholder="请输入密码"
           :rules="[{ required: true, message: '请输入密码' }]"
       />
+      <van-field
+          v-model="checkPassword"
+          type="password"
+          name="checkPassword"
+          label="确认密码"
+          placeholder="请输入确认密码"
+          :rules="[{ required: true, message: '请输入确认密码' }]"
+      />
     </van-cell-group>
     <div style="margin: 16px;">
       <van-button round block type="primary" native-type="submit">
-        提交
+        注册
       </van-button>
     </div>
   </van-form>
@@ -28,7 +53,7 @@
 <script setup>
 import {useRoute, useRouter} from "vue-router";
 import {ref} from "vue";
-import myAxios from "../plugins/myAxios.ts";
+import myAxios from "../../plugins/myAxios.ts";
 import {showFailToast, showSuccessToast} from "vant";
 
 const route = useRoute();
@@ -36,21 +61,28 @@ const router = useRouter();
 
 const userAccount = ref('');
 const userPassword = ref('');
+const checkPassword = ref('');
+const planetCode = ref('');
+const show = ref(false);
 const onSubmit = async () => {
+
   const localToken = localStorage.getItem("token");
   const uuid = localToken ? localToken.split('-')[1] : ''
-  const res = await myAxios.post('/user/login',{
+  const res = await myAxios.post('/user/register',{
     userAccount: userAccount.value,
     userPassword: userPassword.value,
+    checkPassword: checkPassword.value,
+    planetCode: Number(planetCode.value),
     uuid: uuid,
   })
-  console.log('用户登录', res);
+  console.log('用户注册', res);
   if (res.code===0 && res.data){
-    showSuccessToast('登录成功');
     localStorage.setItem("token",res.data);
+    showSuccessToast("注册成功");
     router.replace('/')
   }else {
-    showFailToast('登录失败');
+    showFailToast('注册失败' + (res.description ? `，${res.description}` : ''))
+    router.replace('/user/register')
   }
 };
 </script>

@@ -51,7 +51,6 @@ onMounted(async () => {
   })
       .then(function (response) {
         console.log('/user/search/tags success', response.data);
-        showSuccessToast('请求成功')
         return response?.data;
       })
       .catch(function (error) {
@@ -89,7 +88,6 @@ const change = async ()=>{
   })
       .then(function (response) {
         console.log('/user/search/tags success', response.data);
-        showSuccessToast('请求成功')
         return response?.data;
       })
       .catch(function (error) {

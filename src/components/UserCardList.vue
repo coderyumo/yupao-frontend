@@ -3,7 +3,7 @@
       v-for="user in props.userList"
       :desc="user.profile"
       :tag="user.gender===0?'男':'女'"
-      :title="`${user.username}(${user.planetCode})`"
+      :title="`${user.username}(编号：${user.planetCode})`"
       :thumb="user.avatarUrl"
   >
     <template #tags>

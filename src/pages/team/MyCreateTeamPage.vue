@@ -10,9 +10,9 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
-import {getCurrentUser} from "../services/user.ts";
-import TeamCardList from "../components/TeamCardList.vue";
-import myAxios from "../plugins/myAxios.ts";
+import {getCurrentUser} from "../../services/user.ts";
+import TeamCardList from "../../components/TeamCardList.vue";
+import myAxios from "../../plugins/myAxios.ts";
 import {showFailToast} from "vant";
 
 
@@ -24,10 +24,8 @@ const searchText = ref('');
 
 const listTeam = async (val: string,userId: number) => {
   const token = localStorage.getItem("token").split('-');
-  const currentUser = await getCurrentUser();
-  const resData = await myAxios.get('/team/list/my/join', {
+  const resData = await myAxios.get('/team/list/my/create', {
     params: {
-      userId:currentUser.data.id,
       searchText: val,
       userAccount: token[0],
       uuid: token[1]
@@ -39,17 +37,6 @@ const listTeam = async (val: string,userId: number) => {
     showFailToast("加载失败，刷新重试")
   }
 }
-
-onMounted(async () => {
-      const res = await getCurrentUser();
-      if (res.code === 0) {
-        await router.push('/myteam')
-      } else {
-        await router.push('/user/login')
-      }
-      await listTeam('',0);
-    }
-)
 
 //搜索队伍
 const onSearch = (val) => {

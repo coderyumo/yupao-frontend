@@ -4,6 +4,7 @@
         v-for="team in props.teamList"
         :desc="team.description"
         :title="team.name"
+        :tag="currentUserId === team.userId?'房主':''"
         :thumb="team.createAvatarUrl"
     >
       <template #tags>
@@ -25,21 +26,25 @@
         </div>
       </template>
       <template #footer>
-<!--        <van-button size="small" type="primary" @click="joinTeam(team.id,team.password)" v-if="isUserInTeam(team)">-->
-        <van-button size="small" type="primary" @click="joinTeam(team.id,team.password)">
+        <!--仅未加入队伍可见-->
+        <van-button size="small" v-if="!team.isJoin" type="primary" @click="joinTeam(team.id,team.password)">
           加入队伍
         </van-button>
-        <van-button size="small" v-if="userId === team.userId" type="primary" @click="updateTeam(team.id)">
+        <!--仅创建人可见-->
+        <van-button size="small" v-if="team.userId === currentUserId" type="primary" @click="updateTeam(team.id)">
           修改队伍
         </van-button>
-        <van-button size="small" v-if="userId === team.userId" type="primary" @click="updateTeam(team.id)">
+        <!--仅加入队伍可见,非创建人可见-->
+        <van-button size="small" v-if="team.userId !== currentUserId && team.isJoin" type="primary" @click="quitTeam(team.id)">
           退出队伍
         </van-button>
-        <van-button size="small" v-if="userId === team.userId" type="primary" @click="updateTeam(team.id)">
+        <van-button size="small" v-if="team.userId === currentUserId" type="danger" @click="disbandTeam(team.id)">
           解散队伍
         </van-button>
       </template>
+
     </van-card>
+
   </div>
 
 </template>
@@ -49,7 +54,7 @@ import {defineProps, onMounted, ref} from "vue";
 import {TeamType} from "../models/team";
 import {TeamStatusEnum} from "../constants/team";
 import myAxios from "../plugins/myAxios";
-import {List, passwordInputProps, showFailToast, showSuccessToast, showToast} from "vant";
+import {List, Loading, passwordInputProps, showFailToast, showSuccessToast, showToast} from "vant";
 import {getCurrentUser} from "../services/user";
 import {useRouter} from "vue-router";
 
@@ -59,15 +64,24 @@ interface TeamCardListProps {
 
 const props = defineProps<TeamCardListProps>();
 
-const userId = ref(0);
+const currentUserId = ref(0);
 const router = useRouter();
+
+// 当前用户
+onMounted(async () => {
+  const currentUser = await getCurrentUser();
+  currentUserId.value = currentUser.data.id;
+  console.log('userId',currentUserId.value);
+})
+
+
 /**
  * 加入队伍
  * @param id
  * @param password
  */
+const token = localStorage.getItem("token").split('-');
 const joinTeam = async (id: number, password: string) => {
-  const token = localStorage.getItem("token").split('-');
   const res = await myAxios.post('/team/join', {
     teamId: id,
     password: password,
@@ -77,10 +91,12 @@ const joinTeam = async (id: number, password: string) => {
 
   if (res?.code === 0) {
     showSuccessToast("加入成功")
+    window.location.reload();
   } else {
     showFailToast('加入失败' + (res.description ? `，${res.description}` : ''))
   }
 }
+
 
 /**
  * 去修改队伍
@@ -95,13 +111,47 @@ const updateTeam = (id:number)=>{
   })
 }
 
+/**
+ * 退出队伍
+ * @param id
+ */
+const quitTeam =async (id:number) =>{
+  const  res = await myAxios.post('/team/quit',{
+    userAccount: token[0],
+    uuid: token[1],
+    teamId:id
+  })
+
+  console.log('res',res);
+  if (res.code === 0) {
+    showSuccessToast("操作成功")
+    window.location.reload();
+  } else {
+    showFailToast('操作失败' + (res.description ? `，${res.description}` : ''))
+  }
+}
+
+/**
+ * 解散队伍
+ * @param id
+ */
+const disbandTeam = async (id:number) =>{
+  const res = await myAxios.post('/team/disband',{
+    userAccount: token[0],
+    uuid: token[1],
+    teamId:id
+  })
+  if (res.code === 0) {
+    showSuccessToast("操作成功")
+    window.location.reload();
+  } else {
+    showFailToast('操作失败' + (res.description ? `，${res.description}` : ''))
+  }
+}
+
+console.log('currentUserId',currentUserId.value);
 
 
-// 当前用户
-onMounted(async () => {
-  const currentUser = await getCurrentUser();
-  userId.value = currentUser.data.id;
-})
 
 </script>
 
