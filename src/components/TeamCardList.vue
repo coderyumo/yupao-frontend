@@ -27,7 +27,10 @@
       </template>
       <template #footer>
         <!--仅未加入队伍可见-->
-        <van-button size="small" v-if="!team.isJoin" type="primary" @click="joinTeam(team.id,team.password)">
+        <van-button size="small" type="primary" @click="showDetail(team)">
+          队员详情
+        </van-button>
+        <van-button size="small" v-if="!team.isJoin" type="primary" @click="joinTeam(team.id,team.status)">
           加入队伍
         </van-button>
         <!--仅创建人可见-->
@@ -44,7 +47,13 @@
       </template>
 
     </van-card>
+    <van-dialog v-model:show="show" title="请输入密码" show-cancel-button @confirm="joinEncryptTeam()" @cancel="doClear">
+      <van-field v-model="password" placeholder="请输入密码"/>
+    </van-dialog>
 
+    <van-dialog v-model:show="showMembers" title="队员详情" show-cancel-button>
+      <user-card-list :user-list="userList"/>
+    </van-dialog>
   </div>
 
 </template>
@@ -54,7 +63,7 @@ import {defineProps, onMounted, ref} from "vue";
 import {TeamType} from "../models/team";
 import {TeamStatusEnum} from "../constants/team";
 import myAxios from "../plugins/myAxios";
-import {List, Loading, passwordInputProps, showFailToast, showSuccessToast, showToast} from "vant";
+import {showFailToast, showSuccessToast} from "vant";
 import {getCurrentUser} from "../services/user";
 import {useRouter} from "vue-router";
 
@@ -66,6 +75,33 @@ const props = defineProps<TeamCardListProps>();
 
 const currentUserId = ref(0);
 const router = useRouter();
+const show  = ref(false);
+const password = ref('');
+const teamId = ref(0);
+const showMembers = ref(false);
+const userList = ref([]);
+
+const doClear = () =>{
+  password.value = '';
+}
+
+/**
+ * 展示队伍详情
+ * @param team
+ */
+const showDetail = (team)=>{
+  showMembers.value = true;
+
+  if (team.userList) {
+    team.userList.forEach(user => {
+      if (user.tags) {
+        user.tags = JSON.parse(user.tags)
+      }
+    })
+    userList.value = team.userList;
+  }
+  userList.value = team.userList
+}
 
 // 当前用户
 onMounted(async () => {
@@ -74,27 +110,64 @@ onMounted(async () => {
   console.log('userId',currentUserId.value);
 })
 
-
 /**
  * 加入队伍
  * @param id
  * @param password
  */
 const token = localStorage.getItem("token").split('-');
-const joinTeam = async (id: number, password: string) => {
+const joinTeam = async (id: number,status:number) => {
+  if (status===0){
+    const res = await myAxios.post('/team/join', {
+      teamId: id,
+      password: password.value,
+      userAccount: token[0],
+      uuid: token[1]
+    })
+
+    if (res?.code === 0) {
+      showSuccessToast("加入成功")
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } else {
+      showFailToast('加入失败' + (res.description ? `，${res.description}` : ''))
+
+    }
+  }else {
+    teamId.value = id;
+    show.value = true;
+  }
+
+}
+
+
+/**
+ * 加入加密队伍
+ * @param id
+ * @param password
+ */
+const joinEncryptTeam = async () => {
+
   const res = await myAxios.post('/team/join', {
-    teamId: id,
-    password: password,
+    teamId: teamId.value,
+    password: password.value,
     userAccount: token[0],
     uuid: token[1]
   })
 
   if (res?.code === 0) {
     showSuccessToast("加入成功")
-    window.location.reload();
+    doClear()
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   } else {
+    doClear()
     showFailToast('加入失败' + (res.description ? `，${res.description}` : ''))
   }
+
 }
 
 
@@ -125,7 +198,9 @@ const quitTeam =async (id:number) =>{
   console.log('res',res);
   if (res.code === 0) {
     showSuccessToast("操作成功")
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   } else {
     showFailToast('操作失败' + (res.description ? `，${res.description}` : ''))
   }
@@ -143,14 +218,13 @@ const disbandTeam = async (id:number) =>{
   })
   if (res.code === 0) {
     showSuccessToast("操作成功")
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   } else {
     showFailToast('操作失败' + (res.description ? `，${res.description}` : ''))
   }
 }
-
-console.log('currentUserId',currentUserId.value);
-
 
 
 </script>

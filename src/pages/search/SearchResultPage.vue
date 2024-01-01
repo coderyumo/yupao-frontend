@@ -10,10 +10,10 @@
   />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {onMounted, ref, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
-import myAxios from "../plugins/myAxios.ts";
+import myAxios from "../../plugins/myAxios.ts";
 import {showFailToast, showSuccessToast, Toast} from "vant";
 import qs from 'qs';
 

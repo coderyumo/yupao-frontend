@@ -30,7 +30,7 @@
   </van-form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {useRoute, useRouter} from "vue-router";
 import {ref} from "vue";
 import myAxios from "../../plugins/myAxios.ts";
@@ -53,7 +53,9 @@ const onSubmit = async () => {
   if (res.code===0 && res.data){
     showSuccessToast('登录成功');
     localStorage.setItem("token",res.data);
-    router.replace('/')
+    //跳转到之前的页面
+    const redirectUrl = route.query?.redirect??'/'
+    window.location.href= redirectUrl
   }else {
     showFailToast('登录失败');
   }

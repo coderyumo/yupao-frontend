@@ -7,7 +7,6 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TeamCardList: typeof import('./src/components/TeamCardList.vue')['default']
@@ -17,10 +16,9 @@ declare module 'vue' {
     VanCell: typeof import('vant/es')['Cell']
     VanCellGroup: typeof import('vant/es')['CellGroup']
     VanCol: typeof import('vant/es')['Col']
-    VanCollapse: typeof import('vant/es')['Collapse']
-    VanCollapseItem: typeof import('vant/es')['CollapseItem']
+    VanContactCard: typeof import('vant/es')['ContactCard']
     VanDatePicker: typeof import('vant/es')['DatePicker']
-    VanDatetimePicker: typeof import('vant/es')['DatetimePicker']
+    VanDialog: typeof import('vant/es')['Dialog']
     VanDivider: typeof import('vant/es')['Divider']
     VanEmpty: typeof import('vant/es')['Empty']
     VanField: typeof import('vant/es')['Field']
@@ -46,6 +44,5 @@ declare module 'vue' {
     VanTag: typeof import('vant/es')['Tag']
     VanTimePicker: typeof import('vant/es')['TimePicker']
     VanTreeSelect: typeof import('vant/es')['TreeSelect']
-    VanUploader: typeof import('vant/es')['Uploader']
   }
 }

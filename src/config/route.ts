@@ -4,16 +4,16 @@ import Team from "../pages/team/TeamPage.vue";
 import MyTeamPage from "../pages/team/MyTeamPage.vue";
 import MyCreateTeamPage from "../pages/team/MyCreateTeamPage.vue";
 import UserUpdatePage from "../pages/user/UserUpdatePage.vue";
-import Search from "../pages/SearchPage.vue";
+import Search from "../pages/search/SearchPage.vue";
 import UserEditPage from "../pages/user/UserEditPage.vue";
-import SearchResultPage from "../pages/SearchResultPage.vue";
+import SearchResultPage from "../pages/search/SearchResultPage.vue";
 import UserLoginPage from "../pages/user/UserLoginPage.vue";
 import UserTagsPage from "../pages/user/UserTagsPage.vue";
 import UserRegisterPage from "../pages/user/UserRegisterPage.vue";
 import UserPage from "../pages/user/UserPage.vue";
 import TeamAddPage from "../pages/team/TeamAddPage.vue";
 import TeamUpdatePage from "../pages/team/TeamUpdatePage.vue";
-import DoPassword from "../pages/DoPassword.vue";
+import DoPassword from "../pages/team/DoPassword.vue";
 
 const routes = [
     {path: '/', component: Index},

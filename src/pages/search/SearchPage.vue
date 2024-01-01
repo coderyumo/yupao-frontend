@@ -1,5 +1,5 @@
 <template>
-  <form action="/">
+  <form action="/public">
     <van-search
         v-model="searchText"
         show-action
@@ -29,7 +29,7 @@
 
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {ref} from "vue";
 import {useRouter} from "vue-router";
 

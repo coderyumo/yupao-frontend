@@ -1,6 +1,6 @@
 <template>
   <van-search v-model="searchText" placeholder="搜索队伍" @search="onSearch"/>
-  <van-button type="primary" @click="doAddTeam">创建队伍</van-button>
+  <van-button type="primary" class="add-button" icon="plus" @click="doAddTeam"/>;
   <TeamCardList :team-list="teamList"/>
   <van-empty description="数据为空" v-if="!teamList ||teamList.length < 1"/>
   <div id="teamPage">
@@ -22,7 +22,7 @@ const router = useRouter();
 const searchText = ref('');
 
 
-const listTeam = async (val: string,userId: number) => {
+const listTeam = async (val: string) => {
   const token = localStorage.getItem("token").split('-');
   const resData = await myAxios.get('/team/list/my/create', {
     params: {
@@ -40,8 +40,12 @@ const listTeam = async (val: string,userId: number) => {
 
 //搜索队伍
 const onSearch = (val) => {
-  listTeam('',0)
+  listTeam('')
 };
+
+onMounted(()=>{
+  listTeam('')
+})
 
 
 const doAddTeam = () => {
