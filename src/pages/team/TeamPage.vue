@@ -29,13 +29,17 @@ const onClickTab = ({ name }) => {
 };
 
 const listTeam = async (val = '') => {
-  const token = localStorage.getItem("token").split('-');
+  const token = localStorage.getItem("token");
+  if (token == null) {
+    const redirectUrl = window.location.href;
+    window.location.href=`/user/login?redirect=${redirectUrl}`
+  }
   const resData = await myAxios.get('/team/list', {
     params: {
       status:active.value,
       searchText: val,
-      userAccount: token[0],
-      uuid: token[1]
+      userAccount: token.split('-')[0],
+      uuid: token.split('-')[1]
     }
   })
   if (resData?.code === 0) {

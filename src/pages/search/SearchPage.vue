@@ -109,6 +109,12 @@ const originTagList = [
 let tagList = ref(originTagList);
 console.log(tagList.value);
 
+const token = localStorage.getItem("token");
+if (token == null) {
+  const redirectUrl = window.location.href;
+  window.location.href=`/user/login?redirect=${redirectUrl}`
+}
+
 const onSearch = (val) => {
   tagList.value = originTagList.map(parentTag => {
     const tempChildren = parentTag.children.filter(item => item.text.includes(searchText.value));

@@ -85,6 +85,7 @@ const doClear = () =>{
   password.value = '';
 }
 
+
 /**
  * 展示队伍详情
  * @param team
@@ -110,19 +111,27 @@ onMounted(async () => {
   console.log('userId',currentUserId.value);
 })
 
+
+
+const token = localStorage.getItem("token");
+if (token == null) {
+  window.location.href = "/user/login"
+}
+
+
+
 /**
  * 加入队伍
  * @param id
- * @param password
+ * @param status
  */
-const token = localStorage.getItem("token").split('-');
 const joinTeam = async (id: number,status:number) => {
   if (status===0){
     const res = await myAxios.post('/team/join', {
       teamId: id,
       password: password.value,
-      userAccount: token[0],
-      uuid: token[1]
+      userAccount: token.split('-')[0],
+      uuid: token.split('-')[1]
     })
 
     if (res?.code === 0) {
@@ -153,8 +162,8 @@ const joinEncryptTeam = async () => {
   const res = await myAxios.post('/team/join', {
     teamId: teamId.value,
     password: password.value,
-    userAccount: token[0],
-    uuid: token[1]
+    userAccount: token.split('-')[0],
+    uuid: token.split('-')[1]
   })
 
   if (res?.code === 0) {
@@ -190,8 +199,8 @@ const updateTeam = (id:number)=>{
  */
 const quitTeam =async (id:number) =>{
   const  res = await myAxios.post('/team/quit',{
-    userAccount: token[0],
-    uuid: token[1],
+    userAccount: token.split('-')[0],
+    uuid: token.split('-')[1],
     teamId:id
   })
 
@@ -212,8 +221,8 @@ const quitTeam =async (id:number) =>{
  */
 const disbandTeam = async (id:number) =>{
   const res = await myAxios.post('/team/disband',{
-    userAccount: token[0],
-    uuid: token[1],
+    userAccount: token.split('-')[0],
+    uuid: token.split('-')[1],
     teamId:id
   })
   if (res.code === 0) {

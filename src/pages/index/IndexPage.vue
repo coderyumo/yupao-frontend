@@ -25,6 +25,10 @@ const isLoading = ref(false);
 const isMatchMode = ref<boolean>(false)
 
 const token = localStorage.getItem("token");
+if (token == null) {
+  const redirectUrl = window.location.href;
+  window.location.href=`/user/login?redirect=${redirectUrl}`
+}
 onMounted(async () => {
   isLoading.value = true;
 

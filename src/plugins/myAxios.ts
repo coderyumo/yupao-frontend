@@ -1,6 +1,9 @@
 import axios from "axios";
+
+const isDev = process.env.NODE_ENV === 'development';
+
 const myAxios = axios.create({
-    baseURL: 'http://localhost:8080/api'
+    baseURL: isDev? 'http://localhost:8080/api':'https://yupao-backend-87350-7-1307476035.sh.run.tcloudbase.com'
 })
 
 // Add a request interceptor

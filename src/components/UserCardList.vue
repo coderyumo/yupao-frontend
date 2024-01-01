@@ -29,6 +29,11 @@ import {defineProps, ref} from "vue";
   }
   const props = defineProps<UserCardListProps>();
 
+const token = localStorage.getItem("token");
+if (token == null) {
+  window.location.href = "/user/login"
+}
+
   const doContact = (user) =>{
     isShowContact.value = true;
     currentUser.value = user;

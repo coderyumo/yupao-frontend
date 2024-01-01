@@ -13,7 +13,6 @@ import UserRegisterPage from "../pages/user/UserRegisterPage.vue";
 import UserPage from "../pages/user/UserPage.vue";
 import TeamAddPage from "../pages/team/TeamAddPage.vue";
 import TeamUpdatePage from "../pages/team/TeamUpdatePage.vue";
-import DoPassword from "../pages/team/DoPassword.vue";
 
 const routes = [
     {path: '/', component: Index},
@@ -22,7 +21,6 @@ const routes = [
     {path: '/team/my/create',title:'我创建的队伍', component: MyCreateTeamPage},
     {path: '/team/add',title:'添加队伍', component: TeamAddPage},
     {path: '/team/update',title:'修改队伍', component: TeamUpdatePage},
-    {path: '/team/dopassword',title:'输入密码', component: DoPassword},
     {path: '/user', title:'我的信息',component: UserPage},
     {path: '/search',title:'搜索队伍', component: Search},
     {path: '/user/list', component: SearchResultPage},
