@@ -111,8 +111,7 @@ console.log(tagList.value);
 
 const token = localStorage.getItem("token");
 if (token == null) {
-  const redirectUrl = window.location.href;
-  window.location.href=`/user/login?redirect=${redirectUrl}`
+  window.location.href='/user/login'
 }
 
 const onSearch = (val) => {

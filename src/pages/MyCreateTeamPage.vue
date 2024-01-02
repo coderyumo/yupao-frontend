@@ -1,5 +1,6 @@
 <template>
   <van-search v-model="searchText" placeholder="搜索队伍" @search="onSearch"/>
+  <van-button type="primary" class="add-button" icon="plus" @click="doAddTeam"/>;
   <TeamCardList :team-list="teamList"/>
   <van-empty description="数据为空" v-if="!teamList ||teamList.length < 1"/>
   <div id="teamPage">
@@ -9,9 +10,9 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
-import {getCurrentUser} from "../../services/user.ts";
-import TeamCardList from "../../components/TeamCardList.vue";
-import myAxios from "../../plugins/myAxios.ts";
+import {getCurrentUser} from "../services/user.ts";
+import TeamCardList from "../components/TeamCardList.vue";
+import myAxios from "../plugins/myAxios.ts";
 import {showFailToast} from "vant";
 
 
@@ -21,9 +22,9 @@ const router = useRouter();
 const searchText = ref('');
 
 
-const listTeam = async (val: string,userId: number) => {
+const listTeam = async (val: string) => {
   const token = localStorage.getItem("token").split('-');
-  const resData = await myAxios.get('/team/list/my/join', {
+  const resData = await myAxios.get('/team/list/my/create', {
     params: {
       searchText: val,
       userAccount: token[0],
@@ -39,8 +40,12 @@ const listTeam = async (val: string,userId: number) => {
 
 //搜索队伍
 const onSearch = (val) => {
-  listTeam('',0)
+  listTeam('')
 };
+
+onMounted(()=>{
+  listTeam('')
+})
 
 
 const doAddTeam = () => {

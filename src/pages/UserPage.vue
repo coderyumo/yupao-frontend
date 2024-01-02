@@ -23,9 +23,9 @@
 <script setup lang="ts">
 import {useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
-import myAxios from "../../plugins/myAxios";
+import myAxios from "../plugins/myAxios";
 import {showFailToast, showSuccessToast} from "vant";
-import {getCurrentUser} from "../../services/user.ts";
+import {getCurrentUser} from "../services/user.ts";
 
 const router = useRouter();
 const user = ref();
@@ -33,8 +33,7 @@ const user = ref();
 onMounted(async () => {
   const token = localStorage.getItem("token");
   if (token == null) {
-    const redirectUrl = window.location.href;
-    window.location.href=`/user/login?redirect=${redirectUrl}`
+    window.location.href='/user/login'
   }
       const res = await getCurrentUser();
       if (res.code === 0) {

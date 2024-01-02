@@ -12,9 +12,9 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
-import {getCurrentUser} from "../../services/user.ts";
-import TeamCardList from "../../components/TeamCardList.vue";
-import myAxios from "../../plugins/myAxios.ts";
+import {getCurrentUser} from "../services/user.ts";
+import TeamCardList from "../components/TeamCardList.vue";
+import myAxios from "../plugins/myAxios.ts";
 import {showFailToast, showSuccessToast} from "vant";
 
 
@@ -31,8 +31,7 @@ const onClickTab = ({ name }) => {
 const listTeam = async (val = '') => {
   const token = localStorage.getItem("token");
   if (token == null) {
-    const redirectUrl = window.location.href;
-    window.location.href=`/user/login?redirect=${redirectUrl}`
+    window.location.href='/user/login'
   }
   const resData = await myAxios.get('/team/list', {
     params: {

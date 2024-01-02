@@ -12,9 +12,9 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
-import myAxios from "../../plugins/myAxios.ts";
+import myAxios from "../plugins/myAxios.ts";
 import {showFailToast, showSuccessToast, Toast} from "vant";
-import UserCardList from "../../components/UserCardList.vue";
+import UserCardList from "../components/UserCardList.vue";
 
 const userList = ref([]);
 const route = useRoute();
@@ -26,8 +26,7 @@ const isMatchMode = ref<boolean>(false)
 
 const token = localStorage.getItem("token");
 if (token == null) {
-  const redirectUrl = window.location.href;
-  window.location.href=`/user/login?redirect=${redirectUrl}`
+  window.location.href='/user/login'
 }
 onMounted(async () => {
   isLoading.value = true;
@@ -42,6 +41,9 @@ onMounted(async () => {
   })
       .then(function (response) {
         console.log('/user/recommend success', response.data);
+        if (token == null) {
+          window.location.href='/user/login'
+        }
           isLoading.value = false;
         return response?.data?.records;
       })

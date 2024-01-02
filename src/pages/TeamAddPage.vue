@@ -53,8 +53,6 @@
             />
           </van-picker-group>
         </van-popup>
--->
-
 
         <van-field name="radio" label="房间类型">
           <template #input>
@@ -65,9 +63,8 @@
             </van-radio-group>
           </template>
         </van-field>
-
         <van-field
-            v-if="Number(addTeamData.password) === 2"
+            v-if="Number(addTeamData.status) === 2"
             v-model="addTeamData.password"
             type="password"
             name="password"
@@ -78,7 +75,7 @@
       </van-cell-group>
       <div style="margin: 16px;">
         <van-button round block type="primary" native-type="submit">
-          修改队伍
+          创建队伍
         </van-button>
       </div>
     </van-form>
@@ -88,71 +85,58 @@
 
 <script setup lang="ts">
 
-import {onMounted, ref} from "vue";
-import myAxios from "../../plugins/myAxios.ts";
+import {ref} from "vue";
+import myAxios from "../plugins/myAxios.ts";
 import {showFailToast, showSuccessToast} from "vant";
-import {useRoute, useRouter} from "vue-router";
+import {useRouter} from "vue-router";
 
 const currentToken = localStorage.getItem("token").split('-');
-const initFromData = {}
+const initFromData = {
+  "name": "",
+  "description": "",
+  "expireTime": new Date(),
+  "maxNum": 0,
+  "password": "",
+  "status": 0,
+  "userAccount": currentToken[0],
+  "uuid": currentToken[1]
+}
 //用户填写的表单数据
-const addTeamData = ref({});
+const addTeamData = ref({...initFromData})
 const minDate = new Date();
 
 const router = useRouter();
-const route = useRoute();
-
-
-const id = route.query.id;
 
 // 展示日期选择器
-const showPicker = ref(false);
 const currentDate = ref(['2022', '06', '01']);		//定义一个初始时间(年月日)
 const currentTime = ref(['12', '00', '00']);		//定义一个初始时间(时分秒)
 const columnsType = ['hour', 'minute', 'second'];
+const showPicker = ref(false);
 const onConfirm = ({ selectedValues }) => {
   //组合过期时间，'T'是满足后端序列化配的
   addTeamData.value.expireTime = currentDate.value.join('-') + ' ' + currentTime.value.join(':');
   showPicker.value = false;		//有了这行才会使picker点击“确认”后自动关闭
 }
 
-onMounted(async ()=>{
-  if (id <=0){
-    showFailToast("加载队伍失败");
-    return
-  }
-  const res = await myAxios.get('/team/getTeamById',{
-    params:{
-      id:id
-    }
-  })
-
-  if (res?.code===0){
-    addTeamData.value = res.data
-  }else {
-    showFailToast("加载队伍失败")
-  }
-})
-
 const onSubmit = async () =>{
-  const res = await myAxios.post('/team/update',{
-    "id":addTeamData.value.id,
+  const res = await myAxios.post('/team/add',{
     "name": addTeamData.value.name,
     "description": addTeamData.value.description,
     "expireTime": addTeamData.value.expireTime,
+    "maxNum": addTeamData.value.maxNum,
     "password": addTeamData.value.password,
     "status":Number(addTeamData.value.status),
     "userAccount": currentToken[0],
     "uuid": currentToken[1]
   })
   if (res?.code === 0 && res.data){
-    showSuccessToast("更新成功")
+    showSuccessToast("添加成功")
     await router.push({
       path: '/team',
       replace: true
     })
   }else {
-    showFailToast("更新失败")
+    showFailToast("添加失败")
   }
 }
 </script>

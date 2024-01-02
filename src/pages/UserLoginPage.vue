@@ -33,7 +33,7 @@
 <script setup lang="ts">
 import {useRoute, useRouter} from "vue-router";
 import {ref} from "vue";
-import myAxios from "../../plugins/myAxios.ts";
+import myAxios from "../plugins/myAxios.ts";
 import {showFailToast, showSuccessToast} from "vant";
 
 const route = useRoute();
@@ -53,9 +53,7 @@ const onSubmit = async () => {
   if (res.code===0 && res.data){
     showSuccessToast('登录成功');
     localStorage.setItem("token",res.data);
-    //跳转到之前的页面
-    const redirectUrl = route.query?.redirect??'/'
-    window.location.href= redirectUrl
+    window.location.href= '/'
   }else {
     showFailToast('登录失败');
   }

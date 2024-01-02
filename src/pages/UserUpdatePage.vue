@@ -17,7 +17,7 @@
 import {useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
 import {showFailToast, showSuccessToast} from "vant";
-import {getCurrentUser} from "../../services/user.ts";
+import {getCurrentUser} from "../services/user.ts";
 
 const router = useRouter();
 const user = ref();
