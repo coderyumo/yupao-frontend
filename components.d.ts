@@ -15,6 +15,8 @@ declare module 'vue' {
     VanCard: typeof import('vant/es')['Card']
     VanCell: typeof import('vant/es')['Cell']
     VanCellGroup: typeof import('vant/es')['CellGroup']
+    VanCheckbox: typeof import('vant/es')['Checkbox']
+    VanCheckboxGroup: typeof import('vant/es')['CheckboxGroup']
     VanCol: typeof import('vant/es')['Col']
     VanContactCard: typeof import('vant/es')['ContactCard']
     VanDatePicker: typeof import('vant/es')['DatePicker']
@@ -43,5 +45,6 @@ declare module 'vue' {
     VanTag: typeof import('vant/es')['Tag']
     VanTimePicker: typeof import('vant/es')['TimePicker']
     VanTreeSelect: typeof import('vant/es')['TreeSelect']
+    VanUploader: typeof import('vant/es')['Uploader']
   }
 }

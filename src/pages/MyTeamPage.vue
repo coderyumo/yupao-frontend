@@ -20,8 +20,7 @@ const teamList = ref([]);
 const router = useRouter();
 const searchText = ref('');
 
-
-const listTeam = async (val: string,userId: number) => {
+const listTeam = async (val: string) => {
   const token = localStorage.getItem("token").split('-');
   const resData = await myAxios.get('/team/list/my/join', {
     params: {
@@ -39,15 +38,13 @@ const listTeam = async (val: string,userId: number) => {
 
 //搜索队伍
 const onSearch = (val) => {
-  listTeam('',0)
+  listTeam('')
 };
 
+onMounted(()=>{
+  listTeam('')
+})
 
-const doAddTeam = () => {
-  router.push({
-    path: '/team/add'
-  })
-}
 </script>
 
 <style scoped>

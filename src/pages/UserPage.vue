@@ -16,7 +16,12 @@
     <van-cell title="修改信息" is-link to="/user/update"/>
     <van-cell title="我加入的队伍" is-link to="/team/my/join"/>
     <van-cell title="我创建的队伍" is-link to="/team/my/create"/>
-    <van-cell title="我的标签" is-link to="/user/tags"/>
+    <van-cell title="我的标签"/>
+    <van-row gutter="16" v-if="user.tags.length > 0" >
+      <van-col v-for="tag in user.tags" style="padding: 15px">
+        <van-tag type="success" size="large">{{ tag }}</van-tag>
+      </van-col>
+    </van-row>
   </template>
 </template>
 
