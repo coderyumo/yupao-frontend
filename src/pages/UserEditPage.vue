@@ -27,7 +27,7 @@
       </van-row>
     </div>
 <!--修改头像-->
-    <van-field name="uploader" label="头像上传">
+    <van-field name="uploader"  v-if="editUser.editKey =='avatar'"  label="头像上传" >
       <template #input>
         <van-uploader v-model="avatarUrlList"
                       accept="image/*"

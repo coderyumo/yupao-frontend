@@ -1,6 +1,7 @@
 <template>
   <user-card-list :user-list="userList"/>
-  <van-loading size="24px" vertical v-if="!userList || userList.length<1 || loading" style="margin-top: 235px; margin-bottom: 235px">加载中...</van-loading>
+  <van-loading size="24px" vertical v-if="loading" style="margin-top: 235px; margin-bottom: 235px" >加载中...</van-loading>
+  <van-empty v-if="isShow " description="暂无数据" />
   <van-pagination
       v-model="pageNum"
       :total-items="total"
@@ -26,6 +27,7 @@ const route = useRoute();
 const {tags} = route.query;
 
 const loading = ref(false);
+const isShow = ref(false);
 
 // 监听 pageNum 的变化
 watch(pageNum, (newValue, oldValue) => {
@@ -39,6 +41,8 @@ watch(pageNum, (newValue, oldValue) => {
 });
 
 onMounted(async () => {
+  loading.value = true;
+  console.log(tags);
   const userListData = await myAxios.get('/user/search/tags', {
     params: {
       pageSize: 8,
@@ -51,6 +55,10 @@ onMounted(async () => {
   })
       .then(function (response) {
         console.log('/user/search/tags success', response.data);
+        if (response.data.records.length == 0){
+          isShow.value = true
+        }
+        loading.value = false;
         return response?.data;
       })
       .catch(function (error) {

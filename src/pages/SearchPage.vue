@@ -154,6 +154,7 @@ const doSearchResult = () =>{
       tags: activeIds.value
     }
   })
+  console.log(JSON.stringify(activeIds.value));
 }
 </script>
 

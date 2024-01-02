@@ -228,11 +228,6 @@ const originTagList = [
 let tagList = ref(originTagList);
 console.log(tagList.value);
 
-const token = localStorage.getItem("token");
-if (token == null) {
-  window.location.href='/user/login'
-}
-
 
 const onSearch = (val) => {
   tagList.value = originTagList.map(parentTag => {
