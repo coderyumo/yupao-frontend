@@ -2,8 +2,11 @@ import axios from "axios";
 
 const isDev = process.env.NODE_ENV === 'development';
 
+console.log(process.env.NODE_ENV);
+
 const myAxios = axios.create({
-    baseURL: isDev? 'http://localhost:8080/api':'yupao-backend.code-li.fun/api'
+    baseURL: isDev? 'http://localhost:8080/api':'http://yupao-backend.code-li.fun/api'
+    // baseURL: 'yupao-backend.code-li.fun'
 })
 
 // Add a request interceptor
