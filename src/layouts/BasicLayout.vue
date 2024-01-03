@@ -24,8 +24,9 @@
 <script setup lang="ts">
 import {showToast} from "vant";
 import {useRoute, useRouter} from "vue-router";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import routes from "../config/route";
+import {getCurrentUser} from "../services/user";
 
 const router = useRouter();
 const route = useRoute();
@@ -38,8 +39,8 @@ router.beforeEach((to,from)=>{
     return toPath === route.path;
   })
   title.value=route?.title??DEFAULT_TITLE
-
 })
+
 
 
 const onClickLeft = () => {

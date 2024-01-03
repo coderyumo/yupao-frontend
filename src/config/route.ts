@@ -13,6 +13,7 @@ import UserRegisterPage from "../pages/UserRegisterPage.vue";
 import UserPage from "../pages/UserPage.vue";
 import TeamAddPage from "../pages/TeamAddPage.vue";
 import TeamUpdatePage from "../pages/TeamUpdatePage.vue";
+import QRCode from "../pages/QRCode.vue";
 
 const routes = [
     {path: '/', component: Index},
@@ -21,6 +22,7 @@ const routes = [
     {path: '/team/my/create',title:'我创建的队伍', component: MyCreateTeamPage},
     {path: '/team/add',title:'添加队伍', component: TeamAddPage},
     {path: '/team/update',title:'修改队伍', component: TeamUpdatePage},
+    {path: '/team/qrcode', title:'二维码',component: QRCode},
     {path: '/user', title:'我的信息',component: UserPage},
     {path: '/search',title:'搜索队伍', component: Search},
     {path: '/user/list', component: SearchResultPage},

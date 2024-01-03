@@ -55,7 +55,8 @@
         </van-popup>
 -->
 
-
+        {{
+          addTeamData.status}}
         <van-field name="radio" label="房间类型">
           <template #input>
             <van-radio-group v-model="addTeamData.status" direction="horizontal">
@@ -65,9 +66,8 @@
             </van-radio-group>
           </template>
         </van-field>
-
         <van-field
-            v-if="Number(addTeamData.password) === 2"
+            v-if="addTeamData.status == 2"
             v-model="addTeamData.password"
             type="password"
             name="password"
@@ -101,7 +101,7 @@ const minDate = new Date();
 
 const router = useRouter();
 const route = useRoute();
-
+const status = ref(0);
 
 const id = route.query.id;
 
@@ -129,6 +129,8 @@ onMounted(async ()=>{
 
   if (res?.code===0){
     addTeamData.value = res.data
+    status.value = res.data.status
+    console.log(res.data);
   }else {
     showFailToast("加载队伍失败")
   }

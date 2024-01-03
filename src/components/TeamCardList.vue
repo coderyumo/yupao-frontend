@@ -30,9 +30,10 @@
         <van-button size="small" type="primary" @click="showDetail(team)">
           队员详情
         </van-button>
-        <van-button size="small" v-if="!team.isJoin" type="primary" @click="joinTeam(team.id,team.status)">
+        <van-button size="small" v-if="!team.isJoin || team.memberId.length===team.maxNum" type="primary" @click="joinTeam(team.id,team.status)">
           加入队伍
         </van-button>
+
         <!--仅创建人可见-->
         <van-button size="small" v-if="team.userId === currentUserId" type="primary" @click="updateTeam(team.id)">
           修改队伍
@@ -44,6 +45,16 @@
         <van-button size="small" v-if="team.userId === currentUserId" type="danger" @click="disbandTeam(team.id)">
           解散队伍
         </van-button>
+
+        {{
+          team.memberId.length}}
+        {{
+          team.maxNum
+        }}
+
+        {{
+          team.memberId.length== team.maxNum
+        }}
       </template>
 
     </van-card>
@@ -54,6 +65,8 @@
     <van-dialog v-model:show="showMembers" title="队员详情" show-cancel-button>
       <user-card-list :user-list="userList"/>
     </van-dialog>
+
+
   </div>
 
 </template>

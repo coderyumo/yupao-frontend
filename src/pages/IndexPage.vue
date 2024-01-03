@@ -41,7 +41,7 @@ onMounted(async () => {
   })
       .then(function (response) {
         console.log('/user/recommend success', response.data);
-        if (token == null) {
+        if (token == null || response.code===40101) {
           window.location.href='/user/login'
         }
           isLoading.value = false;
@@ -83,6 +83,7 @@ const doMatch = async (isMatchMode) => {
           if (response.data==null){
             isShow.value = true;
           }
+
           return response?.data?.records;
         })
         .catch(function (error) {
