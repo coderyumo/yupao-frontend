@@ -36,6 +36,8 @@ if (token == null) {
   window.location.href = "/user/login"
 }
 
+
+
 const loadData = async () => {
   loading.value = true;
   const res = await myAxios.get("/user/friend/list", {
@@ -60,9 +62,9 @@ const loadData = async () => {
 
   } else {
     showFailToast("获取数据失败，请刷新")
-    if (res.code === 40101) {
-      window.location.href = "/user/login"
-    }
+    // if (res.code === 40101) {
+    //   window.location.href = "/user/login"
+    // }
   }
 }
 
@@ -70,6 +72,7 @@ onMounted(() => {
   loadData();
 })
 
+setInterval(loadData, 50000);
 const deleteFriend = async (user) => {
 
   const resData = await getCurrentUser();
@@ -81,9 +84,10 @@ const deleteFriend = async (user) => {
   })
   if (res.code === 0 && res.data) {
     showSuccessToast("删除好友成功！");
-    window.location.href="/user/my/friend"
+    window.location.href="/user"
   } else {
     showFailToast('操作失败' + (res.description ? `，${res.description}` : ''));
+    window.location.href="/user"
   }
 }
 

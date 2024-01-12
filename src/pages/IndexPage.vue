@@ -131,8 +131,9 @@ const rejectApply = async (user) => {
 
 
 const clientId = Math.random().toString().substring(2);
-// 建立 WebSocket 连接
-const websocket = new WebSocket('ws://localhost:8081/api/ws/' + clientId);
+// 建立 WebSocket 连接 本地
+// const websocket = new WebSocket('ws://localhost:8081/api/ws/' + clientId);
+const websocket = new WebSocket('ws://yupao-backend.code-li.fun/api/ws/' + clientId);
 
 // ----- WebSocket API -----
 websocket.onerror = () => setMessageInnerHTML('{"connect":"error"}');
@@ -159,6 +160,7 @@ const showAddFriendSuccess = async (innerHtml) =>{
   console.log('loginUser.id',loginUser.id);
   console.log('innerHtml.senderId',parse.senderId);
   console.log('innerHtml.isAgree',parse.isAgree);
+  console.log("响应信息：",innerHtml)
 
   if (loginUser.id===parse.senderId){
     if(!parse.isAgree){
@@ -188,7 +190,6 @@ const showAddFriendSuccess = async (innerHtml) =>{
   }, 3000); // 3000毫秒（3秒）
 
 }
-
 
 const sendMessage = () => {
   // websocket.send(text.value);
