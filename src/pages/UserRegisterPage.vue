@@ -1,5 +1,4 @@
 <template>
-  <div @click="handlePageClick">
     <van-form @submit="onSubmit">
       <van-cell-group inset>
         <van-field
@@ -59,22 +58,14 @@
                           :after-read="uploadAvatar"/>
           </template>
         </van-field>
-        <van-field
-            v-model="planetCode"
-            name="planetCode"
-            type="number"
-            label="星球编号"
-            placeholder="请输入星球编号"
-            @click="show=true"
-            readonly
-            :rules="[{ required: true, message: '请输入星球编号' }]"
-        />
-        <van-number-keyboard
-            v-model="planetCode"
-            :show="show"
-            :maxlength="6"
-            @blur="show = false"
-        />
+
+        <van-field v-model="planetCode"
+                   type="digit"
+                   name="planetCode"
+                   label="星球编号"
+                   placeholder="请输入星球编号"
+                   :rules="[{ required: true, message: '请输入星球编号' }]"
+                    />
         <van-field
             v-model="userPassword"
             type="password"
@@ -93,7 +84,7 @@
         />
       </van-cell-group>
       <div style="margin: 16px;">
-        <van-button round block type="primary" native-type="submit" :disabled ="isShowRegister">
+        <van-button round block type="primary" native-type="submit">
           注册
         </van-button>
       </div>
@@ -126,7 +117,6 @@
           :items="tagList"
       />
     </van-dialog>
-  </div>
 
 </template>
 
@@ -257,53 +247,6 @@ const doClose = (tag) => {
   })
 }
 
-
-/**
- * 控制注册按钮
- */
-const handleGlobalBlur = (event) => {
-  // 在这里处理全局失去焦点事件触发后的逻辑
-  console.log('页面失去焦点了！');
-  if (username.value != ''
-      && userAccount.value !=''
-      && url.value !=''
-      && planetCode.value !=''
-      && phone.value !=''
-      && email.value !=''
-      && userPassword.value !=''
-      && checkPassword.value !=''
-      && activeIds.value.length > 0 ){
-
-    isShowRegister.value = false;
-  }
-  // 这里可以添加你的处理逻辑，根据需要操作页面上的元素或执行其他操作
-};
-
-const handlePageClick = (event) => {
-  // 在页面组件中捕获点击事件，并阻止其冒泡到 document 上触发全局失焦事件
-  event.stopPropagation();
-  if (username.value != ''
-      && userAccount.value !=''
-      && url.value !=''
-      && planetCode.value !=''
-      && userPassword.value !=''
-      && checkPassword.value !=''
-      && activeIds.value.length > 0 ){
-    isShowRegister.value = false;
-  }
-  // 这里可以添加页面点击事件的处理逻辑
-  console.log('点击了页面！');
-};
-
-onMounted(() => {
-  // 在组件 mounted 时添加事件监听器
-  document.addEventListener('click', handleGlobalBlur);
-});
-
-onBeforeUnmount(() => {
-  // 在组件 unmounted 时移除事件监听器，以防止内存泄漏
-  document.removeEventListener('click', handleGlobalBlur);
-});
 
 /**
  * 上传头像

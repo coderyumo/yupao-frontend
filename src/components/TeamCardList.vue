@@ -45,16 +45,6 @@
         <van-button size="small" v-if="team.userId === currentUserId" type="danger" @click="disbandTeam(team.id)">
           解散队伍
         </van-button>
-
-        {{
-          team.memberId.length}}
-        {{
-          team.maxNum
-        }}
-
-        {{
-          team.memberId.length== team.maxNum
-        }}
       </template>
 
     </van-card>

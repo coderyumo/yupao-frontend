@@ -5,7 +5,7 @@ const isDev = process.env.NODE_ENV === 'development';
 console.log(process.env.NODE_ENV);
 
 const myAxios = axios.create({
-    baseURL: isDev? 'http://localhost:8080/api':'http://yupao-backend.code-li.fun/api'
+    baseURL: isDev? 'http://localhost:8081/api':'http://yupao-backend.code-li.fun/api'
     // baseURL: 'yupao-backend.code-li.fun'
 })
 

@@ -1,19 +1,8 @@
 <template>
-  <template v-if="user">
-<!--    <van-card-->
-<!--        :desc="`自我介绍: ${user.profile}`"-->
-<!--        :tag="user.gender===0?'男':'女'"-->
-<!--        :title="`编号：${user.planetCode}`"-->
-<!--        :thumb="user.avatarUrl"-->
-<!--    >-->
-<!--      <template #tags>-->
-<!--        <van-tag plain type="primary" style="margin-right: 8px;margin-top: 8px;" v-for="tag in user.tags">-->
-<!--          {{ tag }}-->
-<!--        </van-tag>-->
-<!--      </template>-->
-<!--    </van-card>-->
+  <div v-if="user">
     <van-cell title="当前用户" :value="user.userAccount"/>
     <van-cell title="修改信息" is-link to="/user/update"/>
+    <van-cell title="我的好友" is-link to="/user/my/friend"/>
     <van-cell title="我加入的队伍" is-link to="/team/my/join"/>
     <van-cell title="我创建的队伍" is-link to="/team/my/create"/>
     <van-cell title="我的标签"/>
@@ -22,7 +11,8 @@
         <van-tag type="success" size="large">{{ tag }}</van-tag>
       </van-col>
     </van-row>
-  </template>
+  </div>
+
 </template>
 
 <script setup lang="ts">

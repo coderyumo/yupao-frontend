@@ -17,6 +17,7 @@
     <van-tabbar-item to="/" icon="home-o" name="index">主页</van-tabbar-item>
     <van-tabbar-item to="/team" icon="search" name="team">队伍</van-tabbar-item>
     <van-tabbar-item to="/user" icon="friends-o" name="user">个人</van-tabbar-item>
+<!--    <van-tabbar-item to="/message" icon="friends-o" name="message" dot>消息</van-tabbar-item>-->
   </van-tabbar>
 
 </template>

@@ -1,12 +1,23 @@
 <template>
   <van-form @submit="onSubmit">
     <van-field
-        v-if="editUser.editKey !='gender' && editUser.editKey !='tags' && editUser.editKey !='avatar'"
+        v-if="editUser.editKey !='gender' && editUser.editKey !='tags' && editUser.editKey !='avatar' && editUser.editKey !='profile'"
         v-model="editUser.currentValue"
         :name="editUser.editKey"
         :label="editUser.editName"
         :placeholder="`请输入${editUser.editName}`"
     />
+    <van-cell-group>
+      <van-field
+          v-if="editUser.editKey =='profile'"
+          v-model="editUser.currentValue"
+          label="自我介绍"
+          type="textarea"
+          autosize
+          rows="3"
+          placeholder="请输入自我介绍"
+      />
+    </van-cell-group>
 <!--   修改性别 -->
     <van-radio-group style="padding: 10px; margin: 10px;" v-if="editUser.editKey =='gender'"
                      v-model="editUser.currentValue" direction="horizontal">

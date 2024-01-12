@@ -53,10 +53,7 @@
             />
           </van-picker-group>
         </van-popup>
--->
 
-        {{
-          addTeamData.status}}
         <van-field name="radio" label="房间类型">
           <template #input>
             <van-radio-group v-model="addTeamData.status" direction="horizontal">

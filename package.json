@@ -14,6 +14,7 @@
     "qs": "^6.11.2",
     "vant": "^4.8.1",
     "vue": "^3.3.11",
+    "vue-native-websocket": "^2.0.15",
     "vue-router": "4"
   },
   "devDependencies": {
