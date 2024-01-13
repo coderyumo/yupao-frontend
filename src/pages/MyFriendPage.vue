@@ -72,7 +72,7 @@ onMounted(() => {
   loadData();
 })
 
-setInterval(loadData, 50000);
+setInterval(loadData, 5000);
 const deleteFriend = async (user) => {
 
   const resData = await getCurrentUser();
@@ -84,10 +84,10 @@ const deleteFriend = async (user) => {
   })
   if (res.code === 0 && res.data) {
     showSuccessToast("删除好友成功！");
-    window.location.href="/user"
+    location.reload()
   } else {
     showFailToast('操作失败' + (res.description ? `，${res.description}` : ''));
-    window.location.href="/user"
+    location.reload()
   }
 }
 

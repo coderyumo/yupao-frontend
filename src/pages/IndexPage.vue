@@ -70,6 +70,7 @@ const onClick = () => {
 /**
  * 获取通知信息
  */
+
 const getNoticeData = async () => {
   const resData = await getCurrentUser();
   const res = await myAxios.get('/notice/friend/add', {
@@ -93,10 +94,6 @@ const getNoticeData = async () => {
 
 // 设置定时器，每隔五秒调用getNoticeData函数
 setInterval(getNoticeData, 5000);
-const token = localStorage.getItem("token");
-if (token == null) {
-  window.location.href='/user/login'
-}
 const agreeApply = async (user) => {
   try {
     const resData = await getCurrentUser();
@@ -152,6 +149,11 @@ const setMessageInnerHTML = async (innerHtml) => {
   await showAddFriendSuccess(innerHtml)
 };
 
+const token = localStorage.getItem("token");
+if (token == null) {
+  window.location.href = "/user/login"
+}
+
 const showAddFriendSuccess = async (innerHtml) =>{
   const currentUser = await getCurrentUser();
   const loginUser = currentUser.data;
@@ -204,8 +206,9 @@ const closeConnection = () => {
 
 
 onMounted(async () => {
-
   await getNoticeData();
+  const currentUser = await getCurrentUser();
+
 
   isLoading.value = true;
   const token = localStorage.getItem("token");
